@@ -40,18 +40,25 @@ var DOMik = {
     }
   },
   // Промяна и връщане на текстово съдържание.
-  elementText: function(selector, text = null) {
-    if (text === null) {
-      return this.getElement(selector).textContent;
-    }
+  setText: function(selector, text) {
     this.getElement(selector).textContent = text;
   },
-  // Промяна и връщане на HTML съдържание на елемента.
-  HTMLСontent: function(selector, newContent = null) {
-    if (newContent === null) {
-      return this.getElement(selector).outerHTML;
+    // Bръщане на текстово съдържание.
+  getText: function(selector) {
+      return this.getElement(selector).textContent;
+  },
+  // Промяна на HTML съдържание на елемента.
+  setHTMLСontent: function(selector, newContent , isAdd = false) {
+    if( isAdd ){
+      this.getElement(selector).innerHTML += newContent;
     }
-    this.getElement(selector).innerHTML = newContent;
+    else{
+      this.getElement(selector).innerHTML = newContent;
+    }
+  },
+    // Bръщане на HTML съдържание на елемента.
+  getHTMLСontent: function(selector) {
+      return this.getElement(selector).outerHTML;
   },
   // Промяна на съществуващи стилове, както и добавяне на множество стилове
   // под формата на обект.
@@ -73,6 +80,11 @@ var DOMik = {
       children: this.getElement(selector).children
     };
     return familyElements;
+  },
+  // Имплементирайте събитиен модел който да ползва вградените в системата обекти
+  // за събития.
+  addEvent: function(selector, event, callback) {
+    this.getElement(selector).addEventListener(event, callback);
   },
 
   showHTML: function() {
