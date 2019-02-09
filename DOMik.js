@@ -43,22 +43,21 @@ var DOMik = {
   setText: function(selector, text) {
     this.getElement(selector).textContent = text;
   },
-    // Bръщане на текстово съдържание.
+  // Bръщане на текстово съдържание.
   getText: function(selector) {
-      return this.getElement(selector).textContent;
+    return this.getElement(selector).textContent;
   },
   // Промяна на HTML съдържание на елемента.
-  setHTMLСontent: function(selector, newContent , isAdd = false) {
-    if( isAdd ){
+  setHTMLСontent: function(selector, newContent, isAdd = false) {
+    if (isAdd) {
       this.getElement(selector).innerHTML += newContent;
-    }
-    else{
+    } else {
       this.getElement(selector).innerHTML = newContent;
     }
   },
-    // Bръщане на HTML съдържание на елемента.
+  // Bръщане на HTML съдържание на елемента.
   getHTMLСontent: function(selector) {
-      return this.getElement(selector).outerHTML;
+    return this.getElement(selector).outerHTML;
   },
   // Промяна на съществуващи стилове, както и добавяне на множество стилове
   // под формата на обект.
