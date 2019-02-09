@@ -56,11 +56,8 @@ var DOMik = {
   // Промяна на съществуващи стилове, както и добавяне на множество стилове
   // под формата на обект.
   setStyle: function(selector, samplingFromStyles) {
-    for (var i = 0; i < samplingFromStyles.length; i++) {
-      this.getElement(selector).style.setProperty(
-        samplingFromStyles[i].property,
-        samplingFromStyles[i].value
-      );
+    for (var key in samplingFromStyles) {
+      this.getElement(selector).style.setProperty(key, samplingFromStyles[key]);
     }
   },
   // Контрол на траверсирането спрямо селектираният елемент в това число
