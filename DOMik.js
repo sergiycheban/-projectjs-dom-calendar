@@ -14,34 +14,20 @@ var DOMik = {
   // Изтриване на съществуващ елемент от HTML страницата.
   removeElement: function(selector) {
     var element = this.getElement(selector);
-    element.parentNode.removeChild(element);
+    element.remove();
+    return this;
   },
   // Промяна на атрибутите на елемента (id / class / data / name)
-  changeElementAttribute: function(selector, properties) {
-    var element = this.getElement(selector);
-    var firstChar = properties.charAt(0);
-    properties = properties.slice(1);
-
-    switch (firstChar) {
-      case ".":
-        element.setAttribute("class", properties);
-        break;
-      case "#":
-        element.setAttribute("id", properties);
-        break;
-      case "@":
-        element.setAttribute("name", properties);
-        break;
-      case "%":
-        element.setAttribute("data", properties);
-        break;
-      default:
-        break;
+  changeElementAttribute: function(selector, attributes ) {
+    for (var key in attributes) {
+      this.getElement(selector).setAttribute(key, attributes[key]);
     }
+    return this;
   },
   // Промяна и връщане на текстово съдържание.
   setText: function(selector, text) {
     this.getElement(selector).textContent = text;
+    return this;
   },
   // Bръщане на текстово съдържание.
   getText: function(selector) {
@@ -54,6 +40,7 @@ var DOMik = {
     } else {
       this.getElement(selector).innerHTML = newContent;
     }
+    return this;
   },
   // Bръщане на HTML съдържание на елемента.
   getHTMLСontent: function(selector) {
@@ -65,25 +52,33 @@ var DOMik = {
     for (var key in samplingFromStyles) {
       this.getElement(selector).style.setProperty(key, samplingFromStyles[key]);
     }
+    return this;
   },
   // Контрол на траверсирането спрямо селектираният елемент в това число
   //  • Достъп до родител (parent element)
+  getParentElement: function(selector) {
+      return this.getElement(selector).parentElement
+  },
+
   //  • Достъп до роднина, над елемент (sibling element)
+  getPreviousSiblingElement: function(selector) {
+      return this.getElement(selector).previousSibling
+  },
+
   //  • Достъп до роднина под елемент (sibling element)
+  getnNxtElementSibling: function(selector) {
+      return this.getElement(selector).nextElementSibling
+  },
+  
   //  • Достъп до всички деца на елемента (children elements)
-  getFamilyElement: function(selector) {
-    var familyElements = {
-      parent: this.getElement(selector).parentElement,
-      previousSibling: this.getElement(selector).previousSibling,
-      nextSibling: this.getElement(selector).nextElementSibling,
-      children: this.getElement(selector).children
-    };
-    return familyElements;
+  getChildren: function(selector) {
+      return this.getElement(selector).children
   },
   // Имплементирайте събитиен модел който да ползва вградените в системата обекти
   // за събития.
   addEvent: function(selector, event, callback) {
     this.getElement(selector).addEventListener(event, callback);
+    return this;
   },
 
   showHTML: function() {
