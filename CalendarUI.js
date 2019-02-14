@@ -3,13 +3,13 @@ var events = [
     day: "2",
     month: "4",
     year: "2019",
-    events: ["Hello", "1", "2"]
+    events: ["AAAAAA", "1", "2Hello"]
   },
   {
     day: "5",
     month: "4",
     year: "2019",
-    events: ["1", "2", "Hello"]
+    events: ["AAAAAA", "2", "AAAAAA"]
   },
   {
     day: "2",
@@ -21,25 +21,25 @@ var events = [
     day: "27",
     month: "10",
     year: "1999",
-    events: ["dateObj", "Hello", "Hello"]
+    events: ["AAAAAA", "AAAAAA", "Hello"]
   },
   {
     day: "20",
     month: "2",
     year: "2019",
-    events: ["dateObj", "Hello", "Hello"]
+    events: ["Hello", "Hello", "AAdateObjAAAA"]
   },
   {
     day: "24",
     month: "2",
     year: "2019",
-    events: ["Hello", "dateObj", "Hello"]
+    events: ["AAAAAA", "dateObj", "Hello"]
   },
   {
     day: "2",
     month: "3",
     year: "2019",
-    events: ["Hello", "Hello", "dateObj"]
+    events: ["Hello", "Hello", "AAAAAA"]
   }
 ];
 
