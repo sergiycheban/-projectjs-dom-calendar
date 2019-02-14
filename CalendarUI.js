@@ -3,43 +3,43 @@ var events = [
     day: "2",
     month: "4",
     year: "2019",
-    title: "Hello"
+    events: ["Hello", "1", "2"]
   },
   {
     day: "5",
     month: "4",
     year: "2019",
-    title: "Hello"
+    events: ["1", "2", "Hello"]
   },
   {
     day: "2",
     month: "3",
     year: "2019",
-    title: "Hello"
+    events: ["Hello", "Hello", "dateObj"]
   },
   {
     day: "27",
     month: "10",
     year: "1999",
-    title: "My Birthday"
+    events: ["dateObj", "Hello", "Hello"]
   },
   {
     day: "20",
     month: "2",
     year: "2019",
-    title: "My Birthday"
+    events: ["dateObj", "Hello", "Hello"]
   },
   {
     day: "24",
     month: "2",
     year: "2019",
-    title: "My Birthday"
+    events: ["Hello", "dateObj", "Hello"]
   },
   {
     day: "2",
     month: "3",
     year: "2019",
-    title: "My Birthday"
+    events: ["Hello", "Hello", "dateObj"]
   }
 ];
 
@@ -49,15 +49,21 @@ var day = dateObj.getUTCDate();
 var year = dateObj.getUTCFullYear();
 var dayWeekNumber = dateObj.getDay();
 var daysMonth = new Date(year, month, 0).getDate();
+var state = "calendar";
 
 var listOfDays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 var dayWeek = listOfDays[6];
 var view = null;
 
+function showDatepicker() {
+  clearHtml();
+  generateCalendar("inputCalendar");
+}
+
 function changeView() {
   console.log("ddshdhsdh");
   if (view == "ListOfWeek") {
-    generateCalendar();
+    generateCalendar("calendar");
   } else if (view == "Calendar") {
     generateListOfWeek();
   }
@@ -69,7 +75,7 @@ function findOfYear() {
   console.log(typeof year);
   month = parseInt(DOMik.getElement("#inputMounth").value);
   clearHtml();
-  generateCalendar();
+  generateCalendar("calendar");
 }
 
 function backMonth() {
@@ -83,7 +89,7 @@ function backMonth() {
   console.log(year + " " + month);
 
   clearHtml();
-  generateCalendar();
+  generateCalendar("calendar");
 }
 
 function nextMonth() {
@@ -97,19 +103,38 @@ function nextMonth() {
   console.log(year + " " + month);
 
   clearHtml();
-  generateCalendar();
+  generateCalendar("calendar");
 }
 
-function showEvent(id) {
-  var isHaveEvent = false;
-  events.map(function(obj) {
-    if (obj.day + obj.month + obj.year === id) {
-      alert(obj.title);
-      isHaveEvent = true;
+function clickOnDay(id, day) {
+  if (state == "calendar") {
+    var listEvent = DOMik.getElement("#listEvent");
+    var fc = listEvent.firstChild;
+
+    while (fc) {
+      listEvent.removeChild(fc);
+      fc = listEvent.firstChild;
     }
-  });
-  if (isHaveEvent == false) {
-    alert("Don't have event");
+    var isHaveEvent = false;
+    events.map(function(obj) {
+      if (obj.day + obj.month + obj.year === id) {
+        for (var i = 0; i < obj.events.length; i++) {
+          DOMik.addElement("#listEvent", "Li", "eventLi" + i);
+          DOMik.changeElementAttribute("#eventLi" + i, {
+            class: "list-group-item list-group-item-primary"
+          });
+          DOMik.setText("#eventLi" + i, obj.events[i]);
+        }
+        isHaveEvent = true;
+      }
+    });
+    if (isHaveEvent == false) {
+      alert("Don't have event");
+    }
+  } else if (state == "inputCalendar") {
+    DOMik.changeElementAttribute("#inputCl", {
+      value: day + "/" + month + "/" + year
+    });
   }
 }
 
@@ -120,7 +145,8 @@ function clearHtml() {
   DOMik.removeElement("#calendarNav");
 }
 
-function generateCalendar() {
+function generateCalendar(parent) {
+  state = parent;
   view = "Calendar";
   var table = "";
   var isStart = false;
@@ -161,7 +187,9 @@ function generateCalendar() {
       }
       if (numberDay <= daysMonth) {
         table +=
-          "<td><div class='col text-center'><button onClick='showEvent(this.id)' id='" +
+          "<td><div class='col text-center'><button name='" +
+          numberDay +
+          "' onClick='clickOnDay(this.id ,this.name )' id='" +
           id +
           "' type='button' class='" +
           styleDay +
@@ -202,7 +230,7 @@ function generateCalendar() {
   // });
 
   DOMik.setHTMLСontent(
-    "#calendar",
+    "#" + parent,
     '<nav id="calendarNav" class="navbar navbar-dark bg-dark"> <a class="navbar-brand text-primary">' +
       day +
       "/" +
@@ -220,7 +248,7 @@ function generateCalendar() {
   );
 
   DOMik.setHTMLСontent(
-    "#calendar",
+    "#" + parent,
     '<table id="mainTable" class="table table-dark table-bordered"> <thead> <tr> ' +
       thForWeekDay +
       "</tr> </thead><tbody>" +
@@ -229,12 +257,12 @@ function generateCalendar() {
     true
   );
   DOMik.setHTMLСontent(
-    "#calendar",
+    "#" + parent,
     '<button id="back" type="button" class="btn btn-primary btn-lg">< Back</button>',
     true
   );
   DOMik.setHTMLСontent(
-    "#calendar",
+    "#" + parent,
     '<div class="float-right"><button id="next" type="button" class="btn btn-primary btn-lg">Next ></button></div>',
     true
   );
@@ -265,7 +293,7 @@ function generateListOfWeek() {
     });
 
     liElements +=
-      '<div class="col text-center"><li onclick="showEvent(this.id)" id="' +
+      '<div class="col text-center"><li onclick="clickOnDay(this.id)" id="' +
       id +
       '" class="list-group-item ' +
       styleDay +

@@ -43,9 +43,21 @@
       <div id="calendar"></div>
     </div>
     <br />
-    <input type="text" class="form-control" placeholder="Calendar" />
+    <div id="events" class="column">
+      <ul class="list-group" id="listEvent"></ul>
+    </div>
+    <br />
+    <br />
+    <input
+      onclick="showDatepicker()"
+      type="text"
+      class="form-control"
+      id="inputCl"
+      placeholder="Calendar"
+    />
+    <div id="inputCalendar"></div>
   </body>
   <script type="text/javascript">
-    generateCalendar();
+    generateCalendar("calendar");
   </script>
 </html>
