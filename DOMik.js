@@ -5,10 +5,13 @@ var DOMik = {
   },
   //Добавяне на не съществуващ елемент към произволен елемент, вече съществуващ
   //на HTML страницата.
-  addElement: function(parentIdentifier, tagChild) {
+  addElement: function(parentIdentifier, tagChild, id = null) {
     var element = this.getElement(parentIdentifier);
     var newElement = document.createElement(tagChild);
     element.appendChild(newElement);
+    if (id !== null) {
+      newElement.setAttribute("id", id);
+    }
     return newElement;
   },
   // Изтриване на съществуващ елемент от HTML страницата.
@@ -18,7 +21,7 @@ var DOMik = {
     return this;
   },
   // Промяна на атрибутите на елемента (id / class / data / name)
-  changeElementAttribute: function(selector, attributes ) {
+  changeElementAttribute: function(selector, attributes) {
     for (var key in attributes) {
       this.getElement(selector).setAttribute(key, attributes[key]);
     }
@@ -57,22 +60,22 @@ var DOMik = {
   // Контрол на траверсирането спрямо селектираният елемент в това число
   //  • Достъп до родител (parent element)
   getParentElement: function(selector) {
-      return this.getElement(selector).parentElement
+    return this.getElement(selector).parentElement;
   },
 
   //  • Достъп до роднина, над елемент (sibling element)
   getPreviousSiblingElement: function(selector) {
-      return this.getElement(selector).previousSibling
+    return this.getElement(selector).previousSibling;
   },
 
   //  • Достъп до роднина под елемент (sibling element)
   getnNxtElementSibling: function(selector) {
-      return this.getElement(selector).nextElementSibling
+    return this.getElement(selector).nextElementSibling;
   },
-  
+
   //  • Достъп до всички деца на елемента (children elements)
   getChildren: function(selector) {
-      return this.getElement(selector).children
+    return this.getElement(selector).children;
   },
   // Имплементирайте събитиен модел който да ползва вградените в системата обекти
   // за събития.
